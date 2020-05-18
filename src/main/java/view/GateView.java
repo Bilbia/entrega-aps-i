@@ -21,7 +21,8 @@ public class GateView extends FixedPanel implements ActionListener, MouseListene
     private final Switch sinalB;
     private final Light light;
     private final Image image;
-    private final boolean ligado;
+    private boolean ligado1;
+    private boolean ligado2;
 
     public GateView(Gate gate) {
 
@@ -33,7 +34,8 @@ public class GateView extends FixedPanel implements ActionListener, MouseListene
         inputB = new JCheckBox("B");
         sinalA = new Switch();
         sinalB = new Switch();
-        ligado = false;
+        ligado1 = false;
+        ligado2 = false;
 
         light = new Light(255, 0, 0);
 
@@ -96,11 +98,16 @@ public class GateView extends FixedPanel implements ActionListener, MouseListene
         // clicar input 1
         if (gate.getInputSize() == 1) {
             if (Math.pow(x - 85, 2) + Math.pow(y - 115, 2) <= 625) {
-                boolean ligado = sinalA.read();
-                if (ligado == false){
-//                    g.drawRect(85, 115, 20, 20);
-                }
-                repaint();
+                ligado1 = sinalA.read();
+            }
+        }
+
+        else {
+            if (Math.pow(x - 85, 2) + Math.pow(y - 92, 2) <= 625) {
+                ligado1 = sinalA.read();
+            }
+            if (Math.pow(x - 85, 2) + Math.pow(y - 138, 2) <= 625) {
+                ligado2 = sinalA.read();
             }
         }
 
@@ -153,10 +160,22 @@ public class GateView extends FixedPanel implements ActionListener, MouseListene
         g.setColor(Color.BLACK);
         if (gate.getInputSize() == 1) {
             g.drawRect(85, 115, 20, 20);
+            if (ligado1 == true){
+                g.fillRect(85, 115, 20, 20);
+            }
         } else {
             g.drawRect(85, 92, 20, 20);
             g.drawRect(85, 138, 20, 20);
+            if (ligado1 == true){
+                g.fillRect(85, 92, 20, 20);
+            }
+            if (ligado2 == true){
+                g.fillRect(85, 138, 20, 20);
+            }
+
         }
+
+
 
 
 
